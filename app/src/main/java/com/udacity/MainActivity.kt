@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
     init {
-//        loadingStatus = LoadingStatus.LOADING
+        loadingStatus = LoadingStatus.LOADING
         resultStatus = ResultStatus.NEUTRAL
 
 
@@ -121,63 +121,26 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "withContext block has started")
                 GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
 
+
+
+
             }
 
 
 
-//            if (loadingState.value == LoadingStatus.DONE) {
-//
-//                //Stop animation of customer views
-//                binding.animatedDownloadButton.cancelAnimators()
-//                binding.progressCircle.cancelAnimatedCircle()
-//                Log.i("MainActivity", "DownloadButton & ProgressCircle animates are cancelled")
-//
-//
-//                //Make custom view disappear
-//                binding.progressCircle.isGone = true
-//                binding.animatedDownloadButton.isGone = true
-//
-//                //Re-set the color of DOWNLOAD text to white
-//                binding.downloadButton.textPaint.color = Color.WHITE
-//                binding.downloadButton.invalidate()
-//
-//
-//                //*****************Navigation to DetailsActivity**************************
-//                //Trigger navigation to DetailsActivity when download complete using Intent
-//                //Do you need to place this code inside the CoroutineScope? I do think so insofar as I
-//                //need to stop this corouting from processing.
-//
-//                fileName = Constants.GLIDE_FILE_NAME
-//                if (resultStatus == ResultStatus.SUCCESS) {
-//                    fileDownloadStatus = "Success"
-//                } else {
-//                    fileDownloadStatus = "Fail"
-//                }
-//
-//                Intent(this@MainActivity, DetailActivity::class.java).also {
-//                    it.putExtra("FILENAME", fileName)
-//                    it.putExtra("STATUS", fileDownloadStatus)
-//
-//                    startActivity(it)
-//                }
-//                //******************************************************************************
-//
-//
-//                //Reset loadingStatus & fileDownloadStatus progress indicators
-//                loadingState.value = LoadingStatus.LOADING
-//                resultStatus = ResultStatus.NEUTRAL
-//
-//                //Stop the coroutine from processing
-//                //I don't think any need to do this as it is being cancelled in onDestroy()??
-//            }
+            loadingState.observe(this@MainActivity, Observer {
 
+                if (loadingState.value == LoadingStatus.DONE) {
+                    finishDownloadProcessing()
+                }
 
+            })
 
         }
 
     }
 
-    fun catchDownload() {
+    fun finishDownloadProcessing() {
         if (loadingState.value == LoadingStatus.DONE) {
 
             //Stop animation of customer views
@@ -250,13 +213,13 @@ class MainActivity : AppCompatActivity() {
 
 //        val viewModel:MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
 
-        loadingState.observe(this, Observer {
-
-            if (loadingState.value == LoadingStatus.DONE) {
-                catchDownload()
-            }
-
-        })
+//        loadingState.observe(this, Observer {
+//
+//            if (loadingState.value == LoadingStatus.DONE) {
+//                catchDownload()
+//            }
+//
+//        })
 
 //        viewModel.loadingState.observe(this, Observer {
 //

@@ -71,7 +71,7 @@ class DownloadReceiver() : BroadcastReceiver() {
 
                 //Step2: Trigger notification
 
-
+                Log.i("DownloadReceiver","Download with ID $id finished!")
 
                 //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
                 resultStatus = ResultStatus.FAIL
@@ -84,7 +84,7 @@ class DownloadReceiver() : BroadcastReceiver() {
                 loadingState.value = LoadingStatus.DONE
 
             }
-        } else {
+        } else if (intent?.action != "android.intent.action.DOWNLOAD_COMPLETE") {
 
             Log.i("DownloadReceiver", "Intent action not showing DOWNLOAD_COMPLETE")
 
