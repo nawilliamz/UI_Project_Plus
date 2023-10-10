@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="default_text_size">20sp</dimen>
+    <dimen name="download_button_sides_margin">20dp</dimen>
+    <dimen name="circleRadius">28dp</dimen>
+
+</resources>
