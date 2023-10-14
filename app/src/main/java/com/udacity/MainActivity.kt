@@ -15,6 +15,7 @@ import android.widget.RadioGroup
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,11 +31,12 @@ lateinit var resultStatus:ResultStatus
 
 lateinit var loadingState:LoadingState<LoadingStatus>
 
+
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    private var downloadID: Long = 0
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var valueAnimator: ValueAnimator
 
 
-
     init {
         loadingStatus = LoadingStatus.LOADING
         resultStatus = ResultStatus.NEUTRAL
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         loadingState = States.StateObj
         States.StateObj.value = LoadingStatus.LOADING
+
 
 //        loadingState.value = LoadingStatus.LOADING
     }
@@ -102,6 +104,8 @@ class MainActivity : AppCompatActivity() {
         animationProcessingScope_GlideSelected.launch {
 
 
+
+
             //Set the color of DOWNLOAD text to same as background color
             binding.downloadButton.textPaint.color = binding.downloadButton.buttonPrimaryColor
             binding.downloadButton.invalidate()
@@ -119,9 +123,10 @@ class MainActivity : AppCompatActivity() {
 
             withContext(Dispatchers.IO) {
                 Log.i("MainActivity", "withContext block has started")
-                GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
+//                GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
 
-
+                FileDownloader(context).downloadFile(Constants.GLIDE_URL, context)
+                Log.i("MainActivity", "Glide_URL is ${Constants.GLIDE_URL}")
 
 
             }

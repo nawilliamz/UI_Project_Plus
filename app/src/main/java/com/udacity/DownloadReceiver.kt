@@ -26,13 +26,20 @@ class DownloadReceiver() : BroadcastReceiver() {
         //Looks like you can use the constant COLUMN_URI to catch the URI target of the download. This is
         //accessed as DownloadManager.COLUMN_URI
 
+        val query = DownloadManager.Query().setFilterByStatus(DownloadManager.STATUS_FAILED)
+
+
+
+        //Pull the action from the intent returned from the download
         if (intent?.action == "android.intent.action.DOWNLOAD_COMPLETE") {
 
+            //pull the id of the download from the intent returned from the download
             val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
 
 
-            if (id != -1L) {
+            if (id == FileDownloader.downloadID) {
 
+                Log.i("DownloadReceiver", "The value of id is $id and the valude of downloadID id ${FileDownloader.downloadID}")
                 //Here is where you will put code for what happens after the download has been completed (trigger the notification). Or you
                 //just change the global events variable to EVENTS.DONE and, since you're observing it in MainActivity, you can do all of
                 //the things that need to happen with the download is done over there.
@@ -59,6 +66,9 @@ class DownloadReceiver() : BroadcastReceiver() {
                 //processAnimation_Glide()
                 loadingState.value = LoadingStatus.DONE
 
+                //Reset downloadID to zero
+                FileDownloader.downloadID = 0
+
 
                 Log.i("DownloadReceiver", "loadingStatus variable value is $loadingStatus")
 
@@ -83,8 +93,11 @@ class DownloadReceiver() : BroadcastReceiver() {
                 //processAnimation_Glide()
                 loadingState.value = LoadingStatus.DONE
 
+                //Reset downloadID to zero
+                FileDownloader.downloadID = 0
+
             }
-        } else if (intent?.action != "android.intent.action.DOWNLOAD_COMPLETE") {
+        } else  {
 
             Log.i("DownloadReceiver", "Intent action not showing DOWNLOAD_COMPLETE")
 
@@ -104,6 +117,9 @@ class DownloadReceiver() : BroadcastReceiver() {
             //to Done, I will trigger the intent to navigate from MainActivity to DetailActivity in MainActivity in
             //processAnimation_Glide()
             loadingState.value = LoadingStatus.DONE
+
+            //Reset downloadID to zero
+            FileDownloader.downloadID = 0
         }
     }
 }
