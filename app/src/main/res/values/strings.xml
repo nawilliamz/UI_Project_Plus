@@ -24,4 +24,7 @@
     <string name="status">Status:</string>
     <string name="okay_button">OK</string>
 
+    <string name="download_channel_id">download_channel</string>
+    <string name="notification_channel_description">Notify download completed</string>
+    <string name="download_channel_name">Download</string>
 </resources>

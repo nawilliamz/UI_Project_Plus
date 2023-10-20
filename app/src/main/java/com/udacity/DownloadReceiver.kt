@@ -1,19 +1,23 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat
+import com.udacity.*
 import com.udacity.Util.*
 import com.udacity.databinding.ActivityMainBinding
+
 
 class DownloadReceiver() : BroadcastReceiver() {
 
     private lateinit var binding: ActivityMainBinding
 
 
-
+    //Context here is the context in which the Receiver is running
     override fun onReceive(context: Context?, intent: Intent?) {
 
 
@@ -54,6 +58,18 @@ class DownloadReceiver() : BroadcastReceiver() {
 
 
                 //Step2: Trigger notification
+                //context is the context passed into DownloadReceiver()
+                val notificationManager = context?.let {
+                    ContextCompat.getSystemService(
+                        it,
+                        NotificationManager::class.java
+                    )
+                } as NotificationManager
+
+                notificationManager.sendNotification(
+                    context.getText(R.string.notification_description).toString(),
+                    context
+                )
 
 
                 //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
@@ -80,6 +96,17 @@ class DownloadReceiver() : BroadcastReceiver() {
 
 
                 //Step2: Trigger notification
+                val notificationManager = context?.let {
+                    ContextCompat.getSystemService(
+                        it,
+                        NotificationManager::class.java
+                    )
+                } as NotificationManager
+
+                notificationManager.sendNotification(
+                    context.getText(R.string.notification_description).toString(),
+                    context
+                )
 
                 Log.i("DownloadReceiver","Download with ID $id finished!")
 
@@ -107,6 +134,17 @@ class DownloadReceiver() : BroadcastReceiver() {
 //            binding.progressCircle.cancelAnimatedCircle()
 
             //Step2: Trigger notification
+//            val notificationManager = context?.let {
+//                ContextCompat.getSystemService(
+//                    it,
+//                    NotificationManager::class.java
+//                )
+//            } as NotificationManager
+//
+//            notificationManager.sendNotification(
+//                context.getText(R.string.notification_description).toString(),
+//                context
+//            )
 
             //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
             resultStatus = ResultStatus.FAIL

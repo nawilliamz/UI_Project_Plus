@@ -1,7 +1,10 @@
 package com.udacity
 
 import android.animation.ValueAnimator
+import android.app.Activity
+import android.app.Application
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -9,6 +12,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.RadioGroup
@@ -216,39 +220,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-//        val viewModel:MainViewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java) }
-
-//        loadingState.observe(this, Observer {
-//
-//            if (loadingState.value == LoadingStatus.DONE) {
-//                catchDownload()
-//            }
-//
-//        })
-
-//        viewModel.loadingState.observe(this, Observer {
-//
-//                if (LoadingState<LoadingStatus>().value == LoadingStatus.DONE) {
-//
-//                }
-//
-//
-//        })
-
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-
-
-
         setOnCheckedListenerToRadioGroup(binding.radioGroup)
-
-//        val DM2 = MultiDownloads(this).downloadFile(MultiDownloads.glideURL)
 
 
 //        binding.animatedDownloadButton.isGone = true
         binding.selectFileButton.isGone = true
 
-//        binding.animatedDownloadButton.isGone = true
+        //pass in channel creation
+        createChannel(getString(R.string.notification_channel_description), getString(R.string.download_channel_name))
 
         //setOnDownloadClickListener runs the lambda passed into it
         binding.downloadButton.setOnDownloadClickListener {
@@ -312,40 +293,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    private fun animateSelectFileButton () {
-//
-//        val animatedWidth = binding.animatedDownloadButton.width
-//
-//        val animator = ValueAnimator.ofInt(0, animatedWidth)
-//        animator.duration = 5000
-//
-//        animator.addUpdateListener { valueAnimator  ->
-//            val animatedValue = valueAnimator.animatedValue as Int
-//
-//            binding.animatedDownloadButton.right = animatedValue
-//        }
-//
-//
-//        animator.start()
-//
-//    }
+    private fun createChannel (channelID:String, channelName:String) {
 
-//    private fun animateButton () {
-//
-//        val initialSize = 0
-//        val finalSize = binding.animatedDownloadButton.measuredWidth
-//
-//        val sizeAnimator = ValueAnimator.ofInt(initialSize, finalSize)
-//        sizeAnimator.duration = 5000
-//
-//        sizeAnimator.addUpdateListener {
-//            binding.animatedDownloadButton.updateLayoutParams {
-//                binding.animatedDownloadButton.width = it.animatedValue as Int
-//            }
-//        }
-//
-//    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+            val notificationChannel = NotificationChannel (channelID, channelName,
+                NotificationManager.IMPORTANCE_HIGH ).apply { setShowBadge(false) }
+
+            notificationChannel.description = getString(R.string.notification_channel_description)
+
+            val notificationManager = this.getSystemService(NotificationManager::class.java)
+
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+
+    }
 
 
 

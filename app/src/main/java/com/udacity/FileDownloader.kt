@@ -65,7 +65,7 @@ class FileDownloader (context: Context):Downloader {
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION)
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "glide-master.zip")
 
-        Log.i("DownloaderClasses", "Glide download method has completed")
+        Log.i("FileDownloader", "Glide download method has completed")
 
 
         downloadID = downloadManager.enqueue(request)
