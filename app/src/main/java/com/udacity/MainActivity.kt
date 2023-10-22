@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fileName:String
     private lateinit var fileDownloadStatus:String
 
-    private var context: Context = this
+    private val mainContext: Context = this
     private lateinit var valueAnimator: ValueAnimator
 
 
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "withContext block has started")
 //                GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
 
-                FileDownloader(context).downloadFile(Constants.GLIDE_URL, context)
+                FileDownloader(mainContext).downloadFile(Constants.GLIDE_URL, mainContext)
                 Log.i("MainActivity", "Glide_URL is ${Constants.GLIDE_URL}")
 
 
@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         binding.selectFileButton.isGone = true
 
         //pass in channel creation
-        createChannel(getString(R.string.notification_channel_description), getString(R.string.download_channel_name))
+        createChannel(getString(R.string.download_channel_id), getString(R.string.download_channel_name))
 
         //setOnDownloadClickListener runs the lambda passed into it
         binding.downloadButton.setOnDownloadClickListener {

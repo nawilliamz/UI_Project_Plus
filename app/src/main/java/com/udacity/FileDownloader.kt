@@ -1,13 +1,10 @@
 package com.udacity
 
 import android.app.DownloadManager
-import android.app.DownloadManager.Request
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
-import androidx.core.content.getSystemService
-import com.udacity.Util.Constants
 import com.udacity.Util.Loading
 import com.udacity.Util.loadingFile
 
@@ -15,14 +12,14 @@ import com.udacity.Util.loadingFile
 
 lateinit var downloadManager:DownloadManager
 
-class FileDownloader (context: Context):Downloader {
+class FileDownloader (dlContext: Context):Downloader {
 
     companion object {
        var downloadID:Long = 0
     }
 
     init {
-        downloadManager  = context.getSystemService(DownloadManager::class.java)
+        downloadManager  = dlContext.getSystemService(DownloadManager::class.java)
     }
 
 
@@ -33,6 +30,7 @@ class FileDownloader (context: Context):Downloader {
 
         when (loadingFile) {
             Loading.GLIDE -> {
+                Log.i("FileDownloader", "loadingFile equals $loadingFile")
                 glideRequest(url)
 
             }
@@ -57,13 +55,13 @@ class FileDownloader (context: Context):Downloader {
 
         val request = DownloadManager.Request(Uri.parse(url))
             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
-            .setTitle("glide-master.zip")
+            .setTitle("glide_master.zip")
             .setDescription(R.string.app_description.toString())
             .setRequiresCharging(false)
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(true)
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION)
-            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "glide-master.zip")
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "glide_master.zip")
 
         Log.i("FileDownloader", "Glide download method has completed")
 
