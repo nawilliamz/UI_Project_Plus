@@ -54,7 +54,7 @@ class FileDownloader (dlContext: Context):Downloader {
 
 
         val request = DownloadManager.Request(Uri.parse(url))
-            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setTitle("glide_master.zip")
             .setDescription(R.string.app_description.toString())
             .setRequiresCharging(false)
