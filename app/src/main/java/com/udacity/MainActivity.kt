@@ -162,6 +162,105 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //************************************************GLIDE CODE************************************************
+
+    //*******************************************Coroutines_Udacity***************************************************
+
+    private var animationProcessingJob_UdacitySelected = Job()
+
+    private val animationProcessingScope_UdacitySelected = CoroutineScope(Dispatchers.Main + animationProcessingJob_UdacitySelected)
+
+    private fun process_Animation_Udacity() {
+
+        animationProcessingScope_UdacitySelected.launch {
+
+            //Set the color of DOWNLOAD text to same as background color
+            binding.downloadButton.textPaint.color = binding.downloadButton.buttonPrimaryColor
+            binding.downloadButton.invalidate()
+            Log.i("MainActivity", "DOWNLOAD text changed to buttonPrimaryColory")
+
+            val leftPosition = binding.downloadButton.x
+            val rightPosition = binding.downloadButton.x + binding.downloadButton.width
+
+            binding.animatedDownloadButton.showAnimatedDownloadButton(leftPosition, rightPosition)
+
+            binding.progressCircle.showAnimatedCircle()
+
+            withContext(Dispatchers.IO) {
+                Log.i("MainActivity", "withContext block has started")
+//                GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
+
+                FileDownloader(mainContext).downloadFile(Constants.UDACITY_URL, mainContext)
+                Log.i("MainActivity", "Udacity_URL is ${Constants.UDACITY_URL}")
+
+            }
+
+            loadingState.observe(this@MainActivity, Observer {
+
+                if (loadingState.value == LoadingStatus.DONE) {
+                    finishDownloadProcessing()
+                }
+
+            })
+
+        }
+
+    }
+
+    //************************************************UDACITY_CODE**********************************************
+
+
+    //*******************************************Coroutines_Retrofit***********************************************
+
+    private var animationProcessingJob_RetrofitSelected = Job()
+
+    private val animationProcessingScope_RetrofitSelected = CoroutineScope(Dispatchers.Main + animationProcessingJob_RetrofitSelected)
+
+        private fun process_Antimation_Retrofit() {
+
+            animationProcessingScope_RetrofitSelected.launch {
+
+                //Set the color of DOWNLOAD text to same as background color
+                binding.downloadButton.textPaint.color = binding.downloadButton.buttonPrimaryColor
+                binding.downloadButton.invalidate()
+                Log.i("MainActivity", "DOWNLOAD text changed to buttonPrimaryColory")
+
+                val leftPosition = binding.downloadButton.x
+                val rightPosition = binding.downloadButton.x + binding.downloadButton.width
+
+                binding.animatedDownloadButton.showAnimatedDownloadButton(leftPosition, rightPosition)
+
+                binding.progressCircle.showAnimatedCircle()
+
+
+                withContext(Dispatchers.IO) {
+                    Log.i("MainActivity", "withContext block has started")
+//                GlideDownloader.downloadFile(Constants.GLIDE_URL, context)
+
+                    FileDownloader(mainContext).downloadFile(Constants.RETROFIT_URL, mainContext)
+                    Log.i("MainActivity", "Udacity_URL is ${Constants.RETROFIT_URL}")
+
+                }
+
+
+                loadingState.observe(this@MainActivity, Observer {
+
+                    if (loadingState.value == LoadingStatus.DONE) {
+                        finishDownloadProcessing()
+                    }
+
+                })
+
+            }
+
+        }
+
+
+
+    //************************************************RETROFIT_CODE***********************************************
+
+
+
     fun finishDownloadProcessing() {
         if (loadingState.value == LoadingStatus.DONE) {
 
@@ -185,7 +284,20 @@ class MainActivity : AppCompatActivity() {
             //Do you need to place this code inside the CoroutineScope? I do think so insofar as I
             //need to stop this corouting from processing.
 
-            fileName = Constants.GLIDE_FILE_NAME
+//            fileName = Constants.GLIDE_FILE_NAME
+
+            when (loadingFile) {
+
+                Loading.GLIDE -> { fileName = Constants.GLIDE_FILE_NAME}
+
+                Loading.UDACITY -> {fileName = Constants.UDACITY_FILE_NAME}
+
+                Loading.RETROFIT ->  {fileName = Constants.RETROFIT_FILE_NAME}
+
+                else -> {fileName = ""}
+            }
+
+
             if (resultStatus == ResultStatus.SUCCESS) {
                 fileDownloadStatus = "Success"
             } else {
@@ -262,9 +374,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 Loading.UDACITY -> {
 
-
+                    process_Animation_Udacity()
                 }
                 Loading.RETROFIT -> {
+
+                    process_Antimation_Retrofit()
 
                 }
                 else -> {

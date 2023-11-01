@@ -52,7 +52,6 @@ class FileDownloader (dlContext: Context):Downloader {
     fun glideRequest (url: String):Long {
 
 
-
         val request = DownloadManager.Request(Uri.parse(url))
             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setTitle("glide_master.zip")
@@ -74,7 +73,7 @@ class FileDownloader (dlContext: Context):Downloader {
     fun udacityRequest (url: String):Long {
 
         val request = DownloadManager.Request(Uri.parse(url))
-            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setTitle("nd940-c3-advanced-android-programming-project-starter-master.zip")
             .setDescription(R.string.app_description.toString())
             .setRequiresCharging(false)
@@ -83,7 +82,7 @@ class FileDownloader (dlContext: Context):Downloader {
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION)
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "nd940-c3-advanced-android-programming-project-starter-master.zip")
 
-        Log.i("DownloaderClasses", "Glide download method has completed")
+        Log.i("FileDownloader", "Udacity download method has completed")
 
 
         downloadID = downloadManager.enqueue(request)
@@ -93,7 +92,7 @@ class FileDownloader (dlContext: Context):Downloader {
     fun retrofitRequest (url: String):Long {
 
         val request = DownloadManager.Request(Uri.parse(url))
-            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI)
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setTitle("retrofit-master.zip")
             .setDescription(R.string.app_description.toString())
             .setRequiresCharging(false)
@@ -102,7 +101,7 @@ class FileDownloader (dlContext: Context):Downloader {
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION)
             .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "retrofit-master.zip")
 
-        Log.i("DownloaderClasses", "Glide download method has completed")
+        Log.i("FileDownloader", "Retrofit download method has completed")
 
 
         downloadID =  downloadManager.enqueue(request)
