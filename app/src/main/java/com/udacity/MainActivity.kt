@@ -19,6 +19,7 @@ import android.widget.RadioGroup
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
@@ -29,6 +30,7 @@ import com.udacity.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
 
+
 //lateinit var loadingStatus:Events
 lateinit var loadingStatus:LoadingStatus
 lateinit var resultStatus:ResultStatus
@@ -36,7 +38,7 @@ lateinit var resultStatus:ResultStatus
 lateinit var loadingState:LoadingState<LoadingStatus>
 
 
-
+lateinit var downloadIntent:Intent
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,8 +64,14 @@ class MainActivity : AppCompatActivity() {
         States.StateObj.value = LoadingStatus.LOADING
 
 
+//        fileName = ""
+//        fileDownloadStatus = ""
+
+
+
 //        loadingState.value = LoadingStatus.LOADING
     }
+
 
 
     //***********************Couroutines_NoFileSelected***********************************
@@ -136,7 +144,12 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
+            //With this code and looking at DownloadReceived.kt, the notification will always be sent BEFORE
+            //the extras are put into the intent (which happens in finishDownloadProcessing()). Therefore,
+            //the sendNotification() (and thus the creation & sending of the notification) is always being done
+            //before the extras are being put into the intent. Therefore, when you click on it, the extras are
+            //not being passed to DetailsActivity. You need to move the notification code on DownloadReceived.kt
+            //down below the setting of resultStatus and loadingState.value
             loadingState.observe(this@MainActivity, Observer {
 
                 if (loadingState.value == LoadingStatus.DONE) {
@@ -179,13 +192,18 @@ class MainActivity : AppCompatActivity() {
                 fileDownloadStatus = "Fail"
             }
 
-            Intent(this@MainActivity, DetailActivity::class.java).also {
+            Log.i("MainActivity", "MARKER PLACE EXTRAS MARKER")
+
+            downloadIntent.also {
                 it.putExtra("FILENAME", fileName)
                 it.putExtra("STATUS", fileDownloadStatus)
 
-                startActivity(it)
+//                startActivity(it)
             }
             //******************************************************************************
+
+
+
 
 
             //Reset loadingStatus & fileDownloadStatus progress indicators
@@ -219,6 +237,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        downloadIntent = Intent(this@MainActivity, DetailActivity::class.java)
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 

@@ -57,8 +57,23 @@ class DownloadReceiver() : BroadcastReceiver() {
 
 
 
-                //Step2: Trigger notification
+
+                //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
+                resultStatus = ResultStatus.SUCCESS
+                Log.i("DownloadReceiver", "downloadStatus variable value is $resultStatus")
+
+                //Step2: Navigate from MainActivity to Details screen with fileName String and success/failure String
+                //May need to use global variable in Events file to do this from MainActivity.By setting loadingStatus
+                //to Done, I will trigger the intent to navigate from MainActivity to DetailActivity in MainActivity in
+                //processAnimation_Glide()
+                loadingState.value = LoadingStatus.DONE
+
+                //Reset downloadID to zero
+                FileDownloader.downloadID = 0
+
+                //Step3: Trigger notification
                 //context is the context passed into DownloadReceiver()
+                Log.i("DownloadReceived", "MARKER SEND_NOTIFICATION")
                 val notificationManager = context?.let {
                     ContextCompat.getSystemService(
                         it,
@@ -70,20 +85,6 @@ class DownloadReceiver() : BroadcastReceiver() {
                     context.getText(R.string.notification_description).toString(),
                     context
                 )
-
-
-                //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
-                resultStatus = ResultStatus.SUCCESS
-                Log.i("DownloadReceiver", "downloadStatus variable value is $resultStatus")
-
-                //Step3: Navigate from MainActivity to Details screen with fileName String and success/failure String
-                //May need to use global variable in Events file to do this from MainActivity.By setting loadingStatus
-                //to Done, I will trigger the intent to navigate from MainActivity to DetailActivity in MainActivity in
-                //processAnimation_Glide()
-                loadingState.value = LoadingStatus.DONE
-
-                //Reset downloadID to zero
-                FileDownloader.downloadID = 0
 
 
                 Log.i("DownloadReceiver", "loadingStatus variable value is $loadingStatus")
@@ -95,7 +96,25 @@ class DownloadReceiver() : BroadcastReceiver() {
                 //Fill in Status field with "Fail"
 
 
-                //Step2: Trigger notification
+
+                Log.i("DownloadReceiver","Download with ID $id finished!")
+
+                //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
+                resultStatus = ResultStatus.FAIL
+
+
+                //Step2: Navigate from MainActivity to Details screen with fileName String and success/failure String
+                //May need to use global variable in Events file to do this from MainActivity.By setting loadingStatus
+                //to Done, I will trigger the intent to navigate from MainActivity to DetailActivity in MainActivity in
+                //processAnimation_Glide()
+                loadingState.value = LoadingStatus.DONE
+
+                //Reset downloadID to zero
+                FileDownloader.downloadID = 0
+
+
+                //Step3: Trigger notification
+                Log.i("DownloadReceived", "MARKER SEND_NOTIFICATION")
                 val notificationManager = context?.let {
                     ContextCompat.getSystemService(
                         it,
@@ -107,21 +126,6 @@ class DownloadReceiver() : BroadcastReceiver() {
                     context.getText(R.string.notification_description).toString(),
                     context
                 )
-
-                Log.i("DownloadReceiver","Download with ID $id finished!")
-
-                //Set download progress indicator so MainActivity knows whether downlaod was SUCCESS or FAIL
-                resultStatus = ResultStatus.FAIL
-
-
-                //Step3: Navigate from MainActivity to Details screen with fileName String and success/failure String
-                //May need to use global variable in Events file to do this from MainActivity.By setting loadingStatus
-                //to Done, I will trigger the intent to navigate from MainActivity to DetailActivity in MainActivity in
-                //processAnimation_Glide()
-                loadingState.value = LoadingStatus.DONE
-
-                //Reset downloadID to zero
-                FileDownloader.downloadID = 0
 
             }
         } else  {

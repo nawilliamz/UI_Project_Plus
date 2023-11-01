@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.renderscript.Sampler.Value
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.ContentInfoCompat.Flags
 import androidx.core.view.isGone
@@ -125,6 +126,7 @@ class AnimatedDownloadButton @JvmOverloads constructor(
         val infiniteWidthValue = ValueAnimator.INFINITE
 
         sizeAnimator = ValueAnimator.ofInt(initialSize, finalSize)
+        sizeAnimator.interpolator = AccelerateDecelerateInterpolator()
 
         if (loadingFile == Loading.NONE) {
             sizeAnimator.duration = 5000
@@ -155,6 +157,7 @@ class AnimatedDownloadButton @JvmOverloads constructor(
         val infinitePositionValue = ValueAnimator.INFINITE
 
         positionAnimator = ValueAnimator.ofFloat(initialPosition, finalPosition)
+        positionAnimator.interpolator = AccelerateDecelerateInterpolator()
 
         //Set duration of animation
         if (loadingFile == Loading.NONE) {
