@@ -24,11 +24,73 @@
             android:layout_height="wrap_content"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.856"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="334dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="331dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline6" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="95dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline8" />
+        <Constraint
+            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            motion:layout_constraintEnd_toStartOf="@+id/guideline2"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:id="@+id/status_label"
+            motion:layout_editor_absoluteY="184dp"
+            motion:layout_constraintHorizontal_bias="1.0" />
+        <Constraint
+            android:layout_marginEnd="16dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintHorizontal_bias="1.0"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            android:layout_marginStart="8dp"
+            android:id="@+id/status_text" />
+        <Constraint
+            android:layout_marginEnd="16dp"
+            motion:layout_editor_absoluteY="95dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintHorizontal_bias="1.0"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            android:layout_marginStart="8dp"
+            android:id="@+id/file_name_text" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="162dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline9" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="148dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline10" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="495dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline11" />
+        <Constraint
+            android:layout_height="wrap_content"
+            motion:layout_constraintGuide_begin="127dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/guideline12" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
